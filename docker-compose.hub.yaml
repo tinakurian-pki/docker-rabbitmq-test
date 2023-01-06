@@ -1,0 +1,34 @@
+version: '3.7'
+networks:
+  credentials_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 169.254.170.0/24
+          gateway: 169.254.170.1
+services:
+  rabbitmq:
+    container_name: my-rabbitmq
+    image: 'rabbitmq:3-management'
+    environment:
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: '-rabbitmq_stream advertised_host rabbitmq'
+    ports:
+      - '5672:5672'
+      - '5552:5552'
+      - '15672:15672'
+      - '25672:25672'
+    volumes:
+      - './conf/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf'
+      - './conf/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins'
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 15s
+      timeout: 15s
+      retries: 5
+    networks:
+      credentials_network:
+        aliases:
+          - rabbitmq
+          - my-rabbitmq
+volumes:
+  data: {}
