@@ -20,6 +20,7 @@ services:
     volumes:
       - './conf/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf'
       - './conf/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins'
+      - './conf/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json'
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 15s
