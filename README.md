@@ -1,4 +1,9 @@
 # docker-rabbitmq-test
+### Run
+```
+docker compose -f docker-compose.hub.yaml up
+```
+
 <details><summary>The Output</summary>
 
 ```
